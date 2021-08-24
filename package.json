@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/rewpt/tinyapp/issues"
   },
-  "homepage": "https://github.com/rewpt/tinyapp#readme"
+  "homepage": "https://github.com/rewpt/tinyapp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
