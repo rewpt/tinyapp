@@ -2,13 +2,26 @@ const express = require('express');
 const app = express();
 const PORT = 8080;
 
-const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({extended: true}));
+// Commented code from LHL. 
+// Looked up on stack overflow and uncommented code is more up to date
+// const bodyParser = require("body-parser");
+// app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
 
-
 app.set("view engine", "ejs");
+
+function generateRandomString() {
+  let tiny = '';
+  const charBank = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const bankLen = charBank.length; 
+  for (let i = 0; i < 6; i++) {
+    let index = Math.floor((Math.random() * bankLen));
+    let ranChar = charBank.charAt(index);
+    tiny += ranChar
+  }
+  return tiny;
+}
 
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
@@ -43,3 +56,9 @@ app.get("/urls/:shortURL", (req, res) => {
   const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL]};
   res.render("urls_show", templateVars);
 });
+
+app.post("/urls", (req, res) => {
+  console.log(req.body);
+  res.send(generateRandomString());
+});
+
