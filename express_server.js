@@ -69,6 +69,5 @@ app.post("/urls", (req, res) => {
   urlDatabase[tiny] = req.body.longURL;
   console.log(urlDatabase); 
   res.redirect(`/urls/${tiny}`);
-  //res.send(`ok: ${tiny}`);
 });
 
