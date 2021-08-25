@@ -43,6 +43,12 @@ app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
 
+app.get("/u/:shortURL", (req, res) => {
+  const shortURL = req.params.shortURL;
+  const longURL = urlDatabase[shortURL];
+  urlDatabase[shortURL] === undefined? res.redirect('/urls') : res.redirect(longURL);
+});
+
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
@@ -59,6 +65,10 @@ app.get("/urls/:shortURL", (req, res) => {
 
 app.post("/urls", (req, res) => {
   console.log(req.body);
-  res.send(generateRandomString());
+  let tiny = generateRandomString()
+  urlDatabase[tiny] = req.body.longURL;
+  console.log(urlDatabase); 
+  res.redirect(`/urls/${tiny}`);
+  //res.send(`ok: ${tiny}`);
 });
 
