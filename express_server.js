@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
 const app = express();
 const PORT = 8080;
 
@@ -25,10 +26,7 @@ class User {
 //Databases
 
 const users = {};
-const urlDatabase = {
-  "b2xVn2": { longURL: "http://www.lighthouselabs.ca" },
-  "9sm5xK": { longURL: "http://www.google.com" }
-};
+const urlDatabase = {};
 
 //Functions 
 
@@ -54,10 +52,12 @@ const emailId = function (newEmail, database) {
 }
 
 const passValid = function (id, password, database) {
-  if (database[id].password === password) {
+  //This should replace the old code below
+  return bcrypt.compareSync(password, database[id].password); // returns true
+  /*if (database[id].password === password) {
     return true
   }
-  return false;
+  return false;*/
 }
 
 const urlsForUser = function (id) {
@@ -93,7 +93,9 @@ app.get("/register", (req, res) => {
 
 app.post("/register", (req, res) => {
 
-  const newUser = new User(generateRandomString(), req.body.email, req.body.password);
+  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+  const newUser = new User(generateRandomString(), req.body.email, hashedPassword);
+  
   if (newUser.email.length === 0 || !newUser.email || newUser.password.length === 0 || !newUser.password) {
     res.status(400);
     res.send('Status Code 400: Inappropriate email or password');
