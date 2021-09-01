@@ -1,3 +1,5 @@
+<!-- <link rel="stylesheet" href="./_header.css"> -->
+
 <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-success">
     <a class="navbar-brand" href="/urls">TinyApp</a>
@@ -8,20 +10,23 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link mr-100" href="/urls/new">Create New URL</a>
-
-        <% if ( user !== undefined && user.id !== undefined) { %>
-          <form class="form-inline" action="/logout" method="POST">
-            <div class="form-group">
-              <span class="nav-item mr-sm-2">Logged in as <%= user.email %></span>
-              <button type="submit" class="btn btn-success btn-outline-dark">Logout</button>
-            </div>
-          </form>
-          <% } else { %>
-            <a href = "/login"><button type="submit" class="mr-2 btn btn-success btn-outline-dark">Login</button></a>
-            <a href = "/register"><button type="submit" class="btn btn-success btn-outline-dark">Register</button></a>
-            <% } %>
+        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
       </div>
+    </div>
+    <div>
+      <% if ( user !==undefined && user.id !==undefined) { %>
+        <form class="form-inline" action="/logout" method="POST">
+          <div class="form-group">
+            <span class="nav-item mr-sm-2">Logged in as <%= user.email %></span>
+            <button type="submit" class="btn btn-success btn-outline-dark">Logout</button>
+          </div>
+        </form>
+        <% } else { %>
+          <div class="navBtn">
+            <a href="/login"><button type="submit" class=" mr-2 btn btn-success btn-outline-dark">Login</button></a>
+            <a href="/register"><button type="submit" class=" btn btn-success btn-outline-dark">Register</button></a>
+          </div>
+          <% } %>
     </div>
   </nav>
 </header>
