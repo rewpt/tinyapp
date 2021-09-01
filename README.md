@@ -31,4 +31,7 @@ It stores a library of your own URLS and their associated shortened links.
 - View a list of your created URL under the my URL link in the nav bar
 - To visit a short link click edit and click the hyper link provided as the short link
 - Alternatively you may access the short link via:
- localhost:8080/u/ <span style="color:deepskyblue">'shortlinkhere'</span>
+ `localhost:8080/u/'shortlinkhere'`
+
+## Final Notes
+- If you do not specify the method at the start of your URL: `https://` will prefix your URL on clicking the short link. 
