@@ -5,8 +5,8 @@ It stores a library of your own URLS and their associated shortened links.
 
 ## Final Product
 
-!["Register"](./docs/Register.png)
-!["Login"](./docs/URLindex.png)
+!["Register"](https://github.com/rewpt/tinyapp/blob/master/docs/Register.png?raw=true)
+!["Login"](https://github.com/rewpt/tinyapp/blob/master/docs/URLindex.png?raw=true)
 
 ## Dependencies
 
@@ -17,13 +17,14 @@ It stores a library of your own URLS and their associated shortened links.
 - body-parser
 - cookie-session
 
-## Getting Started˚
+## Getting Started
 
 - Install all dependencies (using the `npm install` command).
 - Run the development web server using the `npx start` command.
 
 ## In the Browser
 - Navigate to your server `localhost:8080/`
+- Create an account with a valid email and password
 
 ## Using the Application
 - Create a new URL by typing it into the input box and click submit 
