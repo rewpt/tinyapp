@@ -34,7 +34,6 @@ const urlsForUser = function(id, database) {
   const retObj = {};
   for (let url in database) {
     if (database[url]['user_id'] === id) {
-      console.log('?long url: ', database[url].longURL);
       retObj[url] = database[url].longURL;
     }
   }
@@ -49,8 +48,8 @@ const hasHTTP = function(link) {
 };
 
 class User {
-  constructor(id, email, password) {
-    this.id = id;
+  constructor(email, password) {
+    this.id = generateRandomString();
     this.email = email;
     this.password = password;
   }
