@@ -59,7 +59,6 @@ app.post("/register", (req, res) => {
     const newUser = new User(req.body.email, hashedPassword);
     users[newUser.id] = newUser;
     req.session.user_id = newUser.id;
-    console.log(users)
     res.redirect('/urls');
   }
 });
