@@ -35,10 +35,6 @@ app.get("/", (req, res) => {
   res.redirect("/register");
 });
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
-});
-
 app.get("/login", (req, res) => {
   const templateVars = { user: users[req.session.user_id] };
   res.render('login', templateVars);
@@ -51,19 +47,19 @@ app.get("/register", (req, res) => {
 
 app.post("/register", (req, res) => {
 
-  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-  const newUser = new User(generateRandomString(), req.body.email, hashedPassword);
-  
-  if (newUser.email.length === 0 || !newUser.email || req.body.password.length === 0 || !req.body.password) {
+  if (req.body.email.length === 0 || !req.body.email || req.body.password.length === 0 || !req.body.password) {
     res.status(400);
     return res.send('Status Code 400: Inappropriate email or password');
   }
-  if (getUserByEmail(newUser.email, users) !== undefined) {
+  if (getUserByEmail(req.body.email, users) !== undefined) {
     res.status(400);
     return res.send('Status Code 400: Duplicate Email');
   } else {
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    const newUser = new User(req.body.email, hashedPassword);
     users[newUser.id] = newUser;
     req.session.user_id = newUser.id;
+    console.log(users)
     res.redirect('/urls');
   }
 });
@@ -134,8 +130,12 @@ app.get("/urls/new", (req, res) => {
 });
 
 app.get("/urls/:shortURL", (req, res) => {
-  const templateVars = { user: users[req.session.user_id], shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL].longURL };
-  res.render("urls_show", templateVars);
+  if (req.session.user_id === urlDatabase[req.params.shortURL].user_id ) {
+    const templateVars = { user: users[req.session.user_id], shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL].longURL };
+    return res.render("urls_show", templateVars);
+  } else {
+    return res.status('403').send('Error 403: Unable to access this URL. This URL does not exist or you are not logged in as the owner.')
+  }
 });
 
 app.get("/urls", (req, res) => {
@@ -149,8 +149,14 @@ app.get("/urls", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
-  const tiny = generateRandomString();
-  urlDatabase[tiny] = { longURL: req.body.longURL, user_id: req.session.user_id };
-  res.redirect(`/urls/${tiny}`);
+  if (req.session.user_id !== undefined) {
+    const tiny = generateRandomString();
+    urlDatabase[tiny] = { longURL: req.body.longURL, user_id: req.session.user_id };
+    res.redirect(`/urls/${tiny}`);
+  } else {
+    res.status('403').send('Error 403: You must be logged in to submit a URL post request')
+  }
 });
 
+app.listen(PORT, () => {
+});
