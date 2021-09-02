@@ -20,7 +20,7 @@ It stores a library of your own URLS and their associated shortened links.
 ## Getting Started
 
 - Install all dependencies (using the `npm install` command).
-- Run the development web server using the `npx start` command.
+- Run the development web server using the `npm start` command.
 
 ## In the Browser
 - Navigate to your server `localhost:8080/`
